@@ -1,0 +1,36 @@
+{
+  "title": "Primary Nav",
+
+  "schema": {
+    "image": {
+      "type": "string",
+      "faker": {
+        "imageUrl": [111, 222]
+      }
+    },
+    "primaryNav": {
+      "type": "object",
+      "required": [
+        "items"
+      ],
+      "properties": {
+        "items": {
+          "type": "array",
+          "minItems": 4,
+          "maxItems": 5,
+          "items": {
+            "type": "object",
+            "required": [
+              "name"
+            ],
+            "properties": {
+              "name": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
