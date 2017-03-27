@@ -1,4 +1,5 @@
 const
+  path = require('path'),
   gulp = require('gulp'),
   dotenv = require('dotenv'),
   argv = require('yargs').argv;
@@ -132,6 +133,11 @@ require('./tasks/styleguide')('styleguide', {
       request: {
         url: 'http://localhost:9999'
       },
+      script:  {
+        command: '/usr/bin/php',
+        pathToScript: path.resolve('../render-engines/php-liquid/server/'),
+        port: 9999
+      },
       debug: false
     }
   },
@@ -139,8 +145,8 @@ require('./tasks/styleguide')('styleguide', {
     open: false,
     port: 9090,
     https: {
-      key: `${__dirname}/../atomatic/ssl/localhost.key`,
-      cert: `${__dirname}/../atomatic/ssl/localhost.cert`
+      key: path.resolve('../atomatic/ssl/localhost.key'),
+      cert: path.resolve('../atomatic/ssl/localhost.cert')
     }
   }
 });
