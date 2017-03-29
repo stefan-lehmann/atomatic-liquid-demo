@@ -53,6 +53,7 @@ require('./tasks/image')('svg', {
   source: 'source/images/**/*.svg',
   dest: 'source/styleguide/icons',
   svgoPlugins: [
+    {cleanupIDs: true},
     {removeDimensions: true},
     {removeStyleElement: true},
     {removeUselessStrokeAndFill: true},
@@ -68,14 +69,16 @@ require('./tasks/image')('svg', {
     {removeTitle: true},
     {removeViewBox: false},
     {removeEditorsNSData: true},
-    {
-      cleanupNumericValues: {
-        floatPrecision: 2
-      }
-    }
+    {removeAttrs: {attrs: 'id'}},
+    {cleanupNumericValues: {floatPrecision: 2}}
   ],
   reCompress: true,
   flatten: true,
+  hook: (file, t) => {
+    let content = file.contents.toString();
+    const basename = path.basename(file.path, path.extname(file.path));
+    file.contents = Buffer.from(content.replace(/<svg/i, `<svg class="svg svg--${basename}"`), 'utf8');
+  },
   watch: process.argv[2] === 'dev'
 });
 
